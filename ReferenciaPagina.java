@@ -1,6 +1,3 @@
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 class ReferenciaPagina {
     int numeroPagina;
     char tipoAcceso; // 'R' para lectura, 'W' para escritura
