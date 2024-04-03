@@ -1,9 +1,12 @@
-public class ReferenciaPagina {
-    int numeroPagina;
-    String accion; // 'R' para lectura, 'W' para escritura
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-    public ReferenciaPagina(int numeroPagina, String accion) {
+class ReferenciaPagina {
+    int numeroPagina;
+    char tipoAcceso; // 'R' para lectura, 'W' para escritura
+
+    public ReferenciaPagina(int numeroPagina, char tipoAcceso) {
         this.numeroPagina = numeroPagina;
-        this.accion = accion;
+        this.tipoAcceso = tipoAcceso;
     }
 }

@@ -5,15 +5,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         List<Pagina> ram = Collections.synchronizedList(new ArrayList<>()); // Asegurar acceso sincronizado
-        Thread actualizadorPaginas = new Thread(new ActualizadorPaginas(ram));
-        actualizadorPaginas.start();
+        Queue<ReferenciaPagina> colaReferencias = new ConcurrentLinkedQueue<>();
+        int capacidadRAM = 4; // Capacidad máxima de RAM en páginas
+
+        ActualizadorPaginas actualizador = new ActualizadorPaginas(ram, colaReferencias, capacidadRAM);
 
         while (true) {
             System.out.println("Seleccione una opción:");
@@ -36,9 +40,12 @@ public class Main {
                     System.out.print("Ingrese el nombre del archivo donde se guardarán las referencias: ");
                     scanner.nextLine(); // Limpia el buffer
                     String nombreArchivo = scanner.nextLine();
+                    Thread hiloActualizador = new Thread(actualizador);
+                    hiloActualizador.start();
 
                     generarArchivoDeReferencias(nombreArchivo, tp, nf, nc); // Tamaño del filtro fijo a 3
                     System.out.println("Archivo de referencias generado exitosamente.");
+                    hiloActualizador.interrupt();
                     break;
                 case 2:
                     calcularDatos();
@@ -50,6 +57,7 @@ public class Main {
                     System.out.println("Opción no reconocida, por favor intente de nuevo.");
                     break;
             }
+
         }
     }
 
