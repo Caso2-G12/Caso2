@@ -50,6 +50,7 @@ public class SimuladorPaginacion {
         int hits = totalAccesos - fallosDePagina; // Calcula los hits como el total de accesos menos los fallos
         double porcentajeHits = (double) hits / totalAccesos * 100;
 
+        System.out.println("Total de referencias: " + totalAccesos);
         System.out.println("Fallos de página: " + fallosDePagina);
         System.out.println("Hits: " + hits);
         System.out.println("Porcentaje de hits: " + String.format("%.2f", porcentajeHits) + "%");
